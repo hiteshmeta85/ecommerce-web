@@ -1,15 +1,19 @@
 import {Product} from "../../../lib/types";
 import {GetServerSideProps} from "next";
 import Layout from "../../../components/Layout";
-import {ChangeEvent, FormEvent, useState} from "react";
+import {FormEvent, useState} from "react";
 import {useRouter} from "next/router";
+import SelectInput from "../../../components/SelectInput";
 
 export default function IndividualProductDetails({product}: { product: Product }) {
   const router = useRouter()
 
   const [quantity, setQuantity] = useState<number>(0)
 
-  const productRange = product.quantity > 0 ? Array.from(Array(product.quantity).keys()).map(x => x + 1) : [0]
+  const productRange = product.quantity > 0 ? Array.from(Array(product.quantity).keys())
+    .map((x) => {
+      return {key: x + 1, value: x + 1}
+    }) : [{key: 0, value: 0}]
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
@@ -28,16 +32,14 @@ export default function IndividualProductDetails({product}: { product: Product }
         <div className="rounded-lg px-4 py-2 border">
           <p className="mb-4">Only {product.quantity} left in stock.</p>
           <form onSubmit={handleSubmit}>
-            <span>Quantity:</span>
-            <select
+            <SelectInput
+              type={'number'}
+              label={'Quantity: '}
               value={quantity}
-              onChange={(event: ChangeEvent<HTMLSelectElement>) => setQuantity(parseInt(event.target.value))}
-              className="ml-2 border border-gray-200 px-1 py-0.5 rounded border-1"
-            >
-              {productRange.map((item) => {
-                return <option key={item} value={item}>{item}</option>
-              })}
-            </select>
+              setState={setQuantity}
+              isRequired={true}
+              options={productRange}
+            />
             <button
               className="block w-full rounded-full bg-cyan-500 text-white px-2 py-1 w-20 text-center my-2"
               disabled={product.quantity === 0}

@@ -1,10 +1,10 @@
 import React, {ChangeEvent} from 'react';
 
 interface Props {
-  type: string
+  type: string;
   label: string;
   value: string;
-  setState: ((string: string) => void);
+  setState: ((value: string) => void);
   placeholder: string;
   isRequired: boolean;
 }

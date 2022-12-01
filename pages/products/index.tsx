@@ -7,6 +7,7 @@ export default function Products({products}: { products: Product[] }) {
   return (
     <Layout>
       <div className="container flex flex-col gap-3">
+        <p>Products</p>
         {products.map((product) => {
           return (
             <div key={product.id}>
