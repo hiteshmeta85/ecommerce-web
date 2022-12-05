@@ -9,7 +9,7 @@ const Navbar = ({isUserLoggedIn, cartItemCount}: { isUserLoggedIn: boolean, cart
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_HOST}/auth/logout`, {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_HOST}/auth/logout`, "", {
         headers: {
           authorization: `Bearer ${cookies['token']}`
         }
