@@ -2,16 +2,33 @@ import {FormEvent, useState} from "react";
 import Layout from "../../components/Layout";
 import Input from "../../components/Input";
 import {useRouter} from "next/router";
+import axios from "axios";
+import {setCookie} from "nookies";
 
 export default function Login() {
   const router = useRouter()
-  const [username, setUsername] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    console.log([username, password])
-    router.push('/')
+    try {
+      await axios.post(`http://localhost:3333/login`, {email, password})
+        .then(function (response) {
+          if (response.data) {
+            setCookie(null, 'token', `${response.data.token}`, {
+              maxAge: 30 * 24 * 60 * 60,
+              path: '/',
+            })
+            router.push('/')
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -19,11 +36,11 @@ export default function Login() {
       <div className="container">
         <form onSubmit={handleSubmit} className="flex flex-col max-w-sm mx-auto lg:py-20">
           <Input
-            type={'text'}
-            label={'Username'}
-            setState={setUsername}
-            value={username}
-            placeholder={'hiteshmeta'}
+            type={'email'}
+            label={'Email'}
+            setState={setEmail}
+            value={email}
+            placeholder={'johndoe@gmail.com'}
             isRequired={true}
           />
           <Input
