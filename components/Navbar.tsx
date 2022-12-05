@@ -27,7 +27,10 @@ const Navbar = ({isUserLoggedIn, cartItemCount}: { isUserLoggedIn: boolean, cart
     <div className="container flex justify-end gap-4">
       <Link href="/" className="text-blue-600 underline">Home</Link>
       <Link href="/products" className="text-blue-600 underline">Products</Link>
-      <Link href="/cart" className="text-blue-600 underline">Cart {cartItemCount}</Link>
+      <div className="flex gap-0.5">
+        <Link href="/cart" className="text-blue-600 underline">Cart</Link>
+        <p>({cartItemCount})</p>
+      </div>
       {isUserLoggedIn ?
         <button onClick={handleLogout} className="text-blue-600 underline">Logout</button>
         : <Link href="/auth/login" className="text-blue-600 underline">Login</Link>}

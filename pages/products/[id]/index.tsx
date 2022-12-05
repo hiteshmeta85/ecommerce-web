@@ -1,10 +1,11 @@
 import {Product} from "../../../lib/types";
 import {GetServerSideProps} from "next";
-import Layout from "../../../components/Layout";
-import {FormEvent, useState} from "react";
 import {useRouter} from "next/router";
-import SelectInput from "../../../components/SelectInput";
 import getCartItemCount from "../../../lib/getCartItemCount";
+import axios from "axios";
+import {FormEvent, useState} from "react";
+import Layout from "../../../components/Layout";
+import SelectInput from "../../../components/SelectInput";
 
 export default function IndividualProductDetails({
                                                    product,
@@ -59,16 +60,27 @@ export default function IndividualProductDetails({
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/products/${context.params?.id}`);
-  const product = await res.json()
 
   const {isUserLoggedIn, cartItemCount} = await getCartItemCount({token: context.req.cookies['token'] || ""})
 
-  return {
-    props: {
-      product,
-      isUserLoggedIn,
-      cartItemCount
-    },
-  };
+  try {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_HOST}/products/${context.params?.id}`)
+    if (response.data.data) {
+      return {
+        props: {
+          product: response.data.data,
+          cartItemCount,
+          isUserLoggedIn
+        }
+      }
+    } else {
+      return {
+        notFound: true
+      }
+    }
+  } catch (err) {
+    return {
+      notFound: true
+    }
+  }
 };
