@@ -5,10 +5,12 @@ import Navbar from "./Navbar";
 interface Layout {
   pageTitle?: string;
   children: React.ReactNode;
+  isUserLoggedIn: boolean;
+  cartItemCount: number;
 }
 
 function Layout(props: Layout) {
-  const {pageTitle, children} = props
+  const {pageTitle, children, isUserLoggedIn, cartItemCount} = props
 
   return (
     <div>
@@ -19,7 +21,7 @@ function Layout(props: Layout) {
       </Head>
 
       <div>
-        <Navbar/>
+        <Navbar isUserLoggedIn={isUserLoggedIn} cartItemCount={cartItemCount}/>
         {children}
       </div>
     </div>

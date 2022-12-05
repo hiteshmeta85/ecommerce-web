@@ -4,8 +4,10 @@ import Input from "../../components/Input";
 import {useRouter} from "next/router";
 import axios from "axios";
 import {setCookie} from "nookies";
+import {GetServerSideProps} from "next";
+import getCartItemCount from "../../lib/getCartItemCount";
 
-export default function Login() {
+export default function Login({isUserLoggedIn, cartItemCount}: { isUserLoggedIn: boolean, cartItemCount: number }) {
   const router = useRouter()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -13,26 +15,21 @@ export default function Login() {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
     try {
-      await axios.post(`http://localhost:3333/login`, {email, password})
-        .then(function (response) {
-          if (response.data) {
-            setCookie(null, 'token', `${response.data.token}`, {
-              maxAge: 30 * 24 * 60 * 60,
-              path: '/',
-            })
-            router.push('/')
-          }
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_HOST}/auth/login`, {email, password})
+      if (response) {
+        setCookie(null, 'token', `${response.data.token}`, {
+          maxAge: 30 * 24 * 60 * 60,
+          path: '/',
         })
-        .catch(function (error) {
-          console.log(error)
-        })
+        router.push('/')
+      }
     } catch (err) {
       console.log(err)
     }
   }
 
   return (
-    <Layout pageTitle="Login">
+    <Layout pageTitle="Login" isUserLoggedIn={isUserLoggedIn} cartItemCount={cartItemCount}>
       <div className="container">
         <form onSubmit={handleSubmit} className="flex flex-col max-w-sm mx-auto lg:py-20">
           <Input
@@ -62,3 +59,15 @@ export default function Login() {
     </Layout>
   );
 };
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+
+  const {isUserLoggedIn, cartItemCount} = await getCartItemCount({token: context.req.cookies['token'] || ""})
+
+  return {
+    props: {
+      isUserLoggedIn,
+      cartItemCount
+    }
+  }
+}

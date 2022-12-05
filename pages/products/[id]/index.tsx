@@ -4,8 +4,13 @@ import Layout from "../../../components/Layout";
 import {FormEvent, useState} from "react";
 import {useRouter} from "next/router";
 import SelectInput from "../../../components/SelectInput";
+import getCartItemCount from "../../../lib/getCartItemCount";
 
-export default function IndividualProductDetails({product}: { product: Product }) {
+export default function IndividualProductDetails({
+                                                   product,
+                                                   isUserLoggedIn,
+                                                   cartItemCount
+                                                 }: { product: Product, cartItemCount: number, isUserLoggedIn: boolean }) {
   const router = useRouter()
 
   const [quantity, setQuantity] = useState<number>(0)
@@ -22,7 +27,7 @@ export default function IndividualProductDetails({product}: { product: Product }
   }
 
   return (
-    <Layout>
+    <Layout cartItemCount={cartItemCount} isUserLoggedIn={isUserLoggedIn}>
       <div className="container flex flex-col md:flex-row justify-between gap-4 items-start">
         <div className="max-w-2xl">
           <h1 className="text-4xl">{product.name}</h1>
@@ -53,13 +58,17 @@ export default function IndividualProductDetails({product}: { product: Product }
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({params}) => {
-  const res = await fetch(`${process.env.DATABASE_URL}/products/${params?.id}`);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/products/${context.params?.id}`);
   const product = await res.json()
+
+  const {isUserLoggedIn, cartItemCount} = await getCartItemCount({token: context.req.cookies['token'] || ""})
 
   return {
     props: {
-      product
+      product,
+      isUserLoggedIn,
+      cartItemCount
     },
   };
 };
