@@ -23,7 +23,10 @@ export default function Cart({
             )
           })}
         </div>
-        <a href={'/address'} className="bg-green-300 px-2 py-2 rounded">Proceed to Buy</a>
+        {cartItems.length > 0 ?
+          <a href={'/address'} className="bg-green-300 px-2 py-2 rounded">Proceed to Buy</a> :
+          <p className="text-gray-500">No items in cart</p>
+        }
       </div>
     </Layout>
   );
