@@ -28,7 +28,7 @@ function Input(props: Props) {
           required={isRequired}
           placeholder={placeholder || ''}
           autoComplete={'off'}
-          className="block border font-light border-1 py-1 px-2 rounded mt-1"
+          className="block border font-light border-1 py-1 px-2 rounded mt-1 w-full"
         />
       </div>
     );

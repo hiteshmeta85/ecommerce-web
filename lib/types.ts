@@ -17,3 +17,11 @@ export interface CartItem {
   updated_at: string;
   product: Product
 }
+
+export interface Address {
+  id: number;
+  address: string;
+  user_id: number;
+  created_at: string;
+  updated_at: string;
+}

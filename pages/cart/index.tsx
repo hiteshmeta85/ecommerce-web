@@ -16,16 +16,21 @@ export default function Cart({
       <div className="container">
         <p>Cart</p>
         <hr className="my-4"/>
-        <div>
-          {cartItems.map((item, index) => {
-            return (
-              <CartItemCard {...item} key={index}/>
-            )
-          })}
-        </div>
-        {cartItems.length > 0 ?
-          <a href={'/address'} className="bg-green-300 px-2 py-2 rounded">Proceed to Buy</a> :
-          <p className="text-gray-500">No items in cart</p>
+        {isUserLoggedIn ?
+          <>
+            <div>
+              {cartItems.map((item, index) => {
+                return (
+                  <CartItemCard {...item} key={index}/>
+                )
+              })}
+            </div>
+            {cartItems.length > 0 ?
+              <a href={'/address'} className="bg-green-300 px-2 py-2 rounded">Proceed to Buy</a> :
+              <p className="text-gray-500">No items in cart</p>
+            }
+          </> :
+          <p>Please login to view cart</p>
         }
       </div>
     </Layout>

@@ -6,7 +6,7 @@ import axios from "axios";
 import {FormEvent, useState} from "react";
 import Layout from "../../../components/Layout";
 import SelectInput from "../../../components/SelectInput";
-import {getAuthTokenCookie} from "../../../lib/getTokenCookie";
+import {getAuthTokenCookie} from "../../../lib/getAuthTokenCookie";
 
 export default function IndividualProductDetails({
                                                    product,
@@ -62,6 +62,7 @@ export default function IndividualProductDetails({
                 options={productRange}
               />
               <button
+                disabled={!isUserLoggedIn}
                 className="block w-full rounded-full bg-cyan-500 text-white px-2 py-1 w-20 text-center my-2"
               >
                 Add to Cart
