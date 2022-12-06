@@ -41,6 +41,10 @@ export default function IndividualProductDetails({
     }
   }
 
+  const handleChange = (value: number) => {
+    setQuantity(value)
+  }
+
   return (
     <Layout cartItemCount={cartItemCount} isUserLoggedIn={isUserLoggedIn}>
       <div className="container flex flex-col md:flex-row justify-between gap-4 items-start">
@@ -54,10 +58,11 @@ export default function IndividualProductDetails({
           {product.quantity > 0 ?
             <form onSubmit={handleSubmit}>
               <SelectInput
+                id={product.id}
                 type={'number'}
                 label={'Quantity: '}
                 value={quantity}
-                setState={setQuantity}
+                handleChange={handleChange}
                 isRequired={true}
                 options={productRange}
               />

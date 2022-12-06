@@ -1,15 +1,47 @@
 import Layout from "../../components/Layout";
 import {GetServerSideProps} from "next";
 import {CartItem} from "../../lib/types";
-import CartItemCard from "../../components/CartItemCard";
 import axios from "axios";
 import getCartItemCount from "../../lib/getCartItemCount";
+import React, {useState} from "react";
+import SelectInput from "../../components/SelectInput";
+import {getAuthTokenCookie} from "../../lib/getAuthTokenCookie";
 
 export default function Cart({
                                cartItems,
                                isUserLoggedIn,
                                cartItemCount
                              }: { cartItems: CartItem[], isUserLoggedIn: boolean, cartItemCount: number }) {
+
+  const [currentCartItems, setCurrentCartItems] = useState<CartItem[]>(cartItems)
+
+  const productRange = (quantity: number) => Array.from(Array(quantity).keys())
+    .map((x) => {
+      return {key: x + 1, value: x + 1}
+    })
+
+  const handleQuantityChange = async (value: number, id: number) => {
+    try {
+      const response = await axios.put(`${process.env.NEXT_PUBLIC_API_HOST}/cart-items/${id}`, {
+        quantity: value
+      }, {
+        headers: {
+          authorization: `Bearer ${getAuthTokenCookie()}`
+        }
+      })
+      if (response) {
+        const updatedCartItems = currentCartItems.map((item) => {
+          if (item.id === id) {
+            return {...item, quantity: value}
+          }
+          return item
+        })
+        setCurrentCartItems(updatedCartItems)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <Layout isUserLoggedIn={isUserLoggedIn} cartItemCount={cartItemCount}>
@@ -19,9 +51,26 @@ export default function Cart({
         {isUserLoggedIn ?
           <>
             <div>
-              {cartItems.map((item, index) => {
+              {currentCartItems.map((item, index) => {
                 return (
-                  <CartItemCard {...item} key={index}/>
+                  <div key={index}>
+                    <div>
+                      <a href={`/products/${item.product.id}`} className='text-blue-500'>{item.product.name}</a>
+                      <p className='truncate'>{item.product.description}</p>
+                      {item.product.quantity >= item.quantity ?
+                        <SelectInput
+                          id={item.id}
+                          type={'number'}
+                          label={'Quantity: '}
+                          value={item.quantity}
+                          handleChange={handleQuantityChange}
+                          options={productRange(item.quantity)}
+                          isRequired={true}
+                        /> :
+                        <p className="text-red-500 text-sm">Currently Unavailable</p>}
+                    </div>
+                    <hr className="my-4"/>
+                  </div>
                 )
               })}
             </div>

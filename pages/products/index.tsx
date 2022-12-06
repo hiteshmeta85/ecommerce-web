@@ -3,6 +3,7 @@ import {GetServerSideProps} from "next";
 import Layout from "../../components/Layout";
 import getCartItemCount from "../../lib/getCartItemCount";
 import axios from "axios";
+import React from "react";
 
 export default function Products({
                                    products, isUserLoggedIn,
@@ -13,6 +14,7 @@ export default function Products({
     <Layout isUserLoggedIn={isUserLoggedIn} cartItemCount={cartItemCount}>
       <div className="container flex flex-col gap-3">
         <p>Products</p>
+        <hr className="my-4"/>
         {products.map((product) => {
           return (
             <div key={product.id}>

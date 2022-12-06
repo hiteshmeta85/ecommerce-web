@@ -1,31 +1,20 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 
 interface Props {
+  id: number;
   type: string;
   label: string;
   value: number;
-  setState: (value: number) => void;
+  handleChange: (value: number, id: number) => void;
   isRequired: boolean;
   options: {
     key: number;
     value: number;
   }[];
-  shouldSaveItToDatabase?: boolean;
 }
 
 function SelectInput(props: Props) {
-  const {value, type, label, setState, isRequired, options, shouldSaveItToDatabase = false} = props
-
-  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    if (shouldSaveItToDatabase) {
-      // make a request to backend and save the quantity amount
-      // if successful update the state
-      return setState(parseInt(event.target.value))
-      // else show an error
-    } else {
-      return setState(parseInt(event.target.value))
-    }
-  }
+  const {value, type, label, handleChange, isRequired, options, id} = props
 
   if (type === 'number')
     return (
@@ -34,7 +23,7 @@ function SelectInput(props: Props) {
         <select
           value={value}
           required={isRequired}
-          onChange={(event) => handleChange(event)}
+          onChange={(event: any) => handleChange(parseInt(event.target.value), id)}
           className="ml-2 border border-gray-200 px-1 py-0.5 rounded border-1"
         >
           {options.map((item, index) => {

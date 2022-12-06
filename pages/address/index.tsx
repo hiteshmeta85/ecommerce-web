@@ -46,7 +46,7 @@ function Index({
         }
       })
       if (response) {
-        router.push('/success')
+        await router.push('/success')
       }
     } catch (err) {
       console.log(err)

@@ -1,12 +1,14 @@
 import Layout from "../components/Layout";
 import {GetServerSideProps} from "next";
 import getCartItemCount from "../lib/getCartItemCount";
+import React from "react";
 
 export default function Home({isUserLoggedIn, cartItemCount}: { isUserLoggedIn: boolean, cartItemCount: number }) {
   return (
     <Layout pageTitle="Home" cartItemCount={cartItemCount} isUserLoggedIn={isUserLoggedIn}>
       <div className="container">
-        Homepage
+        <p>Homepage</p>
+        <hr className="my-4"/>
       </div>
     </Layout>
   )
