@@ -64,7 +64,7 @@ export default function Cart({
                           label={'Quantity: '}
                           value={item.quantity}
                           handleChange={handleQuantityChange}
-                          options={productRange(item.quantity)}
+                          options={productRange(item.product.quantity)}
                           isRequired={true}
                         /> :
                         <p className="text-red-500 text-sm">Currently Unavailable</p>}
