@@ -15,7 +15,7 @@ export default function IndividualProductDetails({
                                                  }: { product: Product, cartItemCount: number, isUserLoggedIn: boolean }) {
   const router = useRouter()
 
-  const [quantity, setQuantity] = useState<number>(0)
+  const [quantity, setQuantity] = useState<number>(1)
 
   const productRange = product.quantity > 0 ? Array.from(Array(product.quantity).keys())
     .map((x) => {
