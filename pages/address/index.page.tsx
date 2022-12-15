@@ -3,7 +3,7 @@ import {GetServerSideProps} from "next";
 import axios from "axios";
 import getCartItemCount from "../../lib/getCartItemCount";
 import {Address} from "../../lib/types";
-import Layout from "../../components/Layout";
+import Layout from "../layout";
 import Input from "../../components/Input";
 import {getAuthTokenCookie} from "../../lib/getAuthTokenCookie";
 import {useRouter} from "next/router";
@@ -21,7 +21,6 @@ function Index({
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    console.log(newAddress)
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_HOST}/addresses`, {address: newAddress}, {
         headers: {

@@ -1,10 +1,10 @@
-import Layout from "../../components/Layout";
+import Layout from "../layout";
 import {GetServerSideProps} from "next";
 import {CartItem} from "../../lib/types";
 import axios from "axios";
 import getCartItemCount from "../../lib/getCartItemCount";
 import React, {useState} from "react";
-import SelectInput from "../../components/SelectInput";
+import Select from "../../components/Select";
 import {getAuthTokenCookie} from "../../lib/getAuthTokenCookie";
 
 export default function Cart({
@@ -58,7 +58,7 @@ export default function Cart({
                       <a href={`/products/${item.product.id}`} className='text-blue-500'>{item.product.name}</a>
                       <p className='truncate'>{item.product.description}</p>
                       {item.product.quantity >= item.quantity ?
-                        <SelectInput
+                        <Select
                           id={item.id}
                           type={'number'}
                           label={'Quantity: '}

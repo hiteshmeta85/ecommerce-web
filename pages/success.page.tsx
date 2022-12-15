@@ -1,9 +1,9 @@
 import React from 'react';
-import Layout from "../components/Layout";
+import Layout from "./layout";
 import {GetServerSideProps} from "next";
 import getCartItemCount from "../lib/getCartItemCount";
 
-const Success = ({isUserLoggedIn, cartItemCount}: { isUserLoggedIn: boolean, cartItemCount: number }) => {
+const SuccessPage = ({isUserLoggedIn, cartItemCount}: { isUserLoggedIn: boolean, cartItemCount: number }) => {
   return (
     <Layout isUserLoggedIn={isUserLoggedIn} cartItemCount={cartItemCount}>
       <div className="container">
@@ -13,9 +13,10 @@ const Success = ({isUserLoggedIn, cartItemCount}: { isUserLoggedIn: boolean, car
   );
 };
 
-export default Success;
+export default SuccessPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+
   const {isUserLoggedIn, cartItemCount} = await getCartItemCount({token: context.req.cookies['token'] || ""})
 
   return {

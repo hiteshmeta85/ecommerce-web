@@ -1,4 +1,4 @@
-import Layout from "../components/Layout";
+import Layout from "./layout";
 import {GetServerSideProps} from "next";
 import getCartItemCount from "../lib/getCartItemCount";
 import React from "react";

@@ -1,12 +1,12 @@
-import {Product} from "../../../lib/types";
+import {Product} from "../../lib/types";
 import {GetServerSideProps} from "next";
 import {useRouter} from "next/router";
-import getCartItemCount from "../../../lib/getCartItemCount";
+import getCartItemCount from "../../lib/getCartItemCount";
 import axios from "axios";
 import {FormEvent, useState} from "react";
-import Layout from "../../../components/Layout";
-import SelectInput from "../../../components/SelectInput";
-import {getAuthTokenCookie} from "../../../lib/getAuthTokenCookie";
+import Layout from "../layout";
+import Select from "../../components/Select";
+import {getAuthTokenCookie} from "../../lib/getAuthTokenCookie";
 
 export default function IndividualProductDetails({
                                                    product,
@@ -57,7 +57,7 @@ export default function IndividualProductDetails({
           <p className="mb-4">Only {product.quantity} left in stock.</p>
           {product.quantity > 0 ?
             <form onSubmit={handleSubmit}>
-              <SelectInput
+              <Select
                 id={product.id}
                 type={'number'}
                 label={'Quantity: '}
@@ -68,7 +68,7 @@ export default function IndividualProductDetails({
               />
               <button
                 disabled={!isUserLoggedIn}
-                className="block w-full rounded-full bg-cyan-500 text-white px-2 py-1 w-20 text-center my-2"
+                className="w-full rounded-full bg-cyan-500 text-white px-2 py-1 text-center my-2"
               >
                 Add to Cart
               </button>

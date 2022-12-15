@@ -13,7 +13,7 @@ interface Props {
   }[];
 }
 
-function SelectInput(props: Props) {
+function Select(props: Props) {
   const {value, type, label, handleChange, isRequired, options, id} = props
 
   if (type === 'number')
@@ -36,4 +36,4 @@ function SelectInput(props: Props) {
   return null
 }
 
-export default SelectInput;
+export default Select;

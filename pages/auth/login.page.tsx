@@ -1,5 +1,5 @@
 import {FormEvent, useState} from "react";
-import Layout from "../../components/Layout";
+import Layout from "../layout";
 import Input from "../../components/Input";
 import {useRouter} from "next/router";
 import axios from "axios";

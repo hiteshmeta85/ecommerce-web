@@ -1,6 +1,6 @@
 import {Product} from "../../lib/types";
 import {GetServerSideProps} from "next";
-import Layout from "../../components/Layout";
+import Layout from "../layout";
 import getCartItemCount from "../../lib/getCartItemCount";
 import axios from "axios";
 import React from "react";
