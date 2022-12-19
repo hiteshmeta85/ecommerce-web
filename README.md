@@ -11,6 +11,7 @@ with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/
 4. Run `npm run dev` to start the development server
 5. Run `npm run build` to build the project
 6. Run `npm run start` to start the production server
+7. Run `npx cypress run` to run the tests
 
 ## Node Version
 
@@ -27,3 +28,4 @@ with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/
 - [Typescript](https://www.typescriptlang.org/)
 - [TailwindCSS](https://tailwindcss.com/)
 - [Axios](https://axios-http.com/)
+- [Cypress](https://www.cypress.io/)
