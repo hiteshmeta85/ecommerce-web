@@ -7,10 +7,11 @@ interface Props {
   setState: ((value: string) => void);
   placeholder: string;
   isRequired: boolean;
+  name: string;
 }
 
 function Input(props: Props) {
-  const {label, value, isRequired, placeholder, setState, type} = props
+  const {label, value, isRequired, placeholder, setState, type, name} = props
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     return setState(event.target.value)
@@ -21,7 +22,7 @@ function Input(props: Props) {
       <div className="py-2">
         <label>{label}</label>
         <input
-          name="text"
+          name={name}
           type={type}
           value={value}
           onChange={(event) => handleChange(event)}

@@ -1,4 +1,4 @@
-import {FormEvent, useState} from "react";
+import React, {FormEvent, useState} from "react";
 import Layout from "../layout";
 import Input from "../../components/Input";
 import {useRouter} from "next/router";
@@ -31,10 +31,13 @@ export default function Login({isUserLoggedIn, cartItemCount}: { isUserLoggedIn:
   return (
     <Layout pageTitle="Login" isUserLoggedIn={isUserLoggedIn} cartItemCount={cartItemCount}>
       <div className="container">
+        <p>Login</p>
+        <hr className="my-4"/>
         <form onSubmit={handleSubmit} className="flex flex-col max-w-sm mx-auto lg:py-20">
           <Input
             type={'email'}
             label={'Email'}
+            name={'email'}
             setState={setEmail}
             value={email}
             placeholder={'johndoe@gmail.com'}
@@ -43,6 +46,7 @@ export default function Login({isUserLoggedIn, cartItemCount}: { isUserLoggedIn:
           <Input
             type={'password'}
             label={'Password'}
+            name={'password'}
             value={password}
             setState={setPassword}
             placeholder={'********'}
